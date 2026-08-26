@@ -1,0 +1,6 @@
+# Crawling bleibt erlaubt: nur so koennen Suchmaschinen das
+# <meta name="robots" content="noindex"> in index.html ueberhaupt lesen,
+# und Metas Crawler kommt fuer Link-Preview und Ad-Qualitaet durch.
+# Soll die Seite organisch ranken: das noindex-Meta in index.html entfernen.
+User-agent: *
+Allow: /

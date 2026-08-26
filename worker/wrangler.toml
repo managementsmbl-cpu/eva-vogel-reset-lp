@@ -1,0 +1,15 @@
+name = "eva-reset-optin"
+main = "worker.js"
+compatibility_date = "2026-01-01"
+
+[vars]
+# ID des Flodesk-Segments "Audition Nerves Reset".
+# Flodesk -> Audience -> Segments -> Segment oeffnen -> ID steht in der URL.
+FLODESK_SEGMENT_ID = "HIER_SEGMENT_ID_EINTRAGEN"
+
+# Komma-Liste der Origins, die posten duerfen. Leer lassen = alle erlaubt
+# (nur fuer den ersten Test; danach unbedingt eintragen).
+ALLOWED_ORIGINS = "https://reset.evavogel.com"
+
+# FLODESK_API_KEY wird NICHT hier eingetragen, sondern als Secret gesetzt:
+#   npx wrangler secret put FLODESK_API_KEY
