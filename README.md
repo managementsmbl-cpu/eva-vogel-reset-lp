@@ -7,14 +7,14 @@ Kein Framework, kein Build, keine externen Requests im kritischen Pfad.
 index.html                        alles drin: Markup, Critical CSS, JS (~15 KB)
 deploy/CNAME                      reset.evavogel.com — erst nach DNS ins Root schieben
 robots.txt
-assets/freebie-mockup.webp        7 KB — PLATZHALTER, ersetzen
-assets/freebie-mockup.jpg         18 KB — Fallback fuer alte Browser
+assets/freebie-mockup.webp        56 KB — Eva im Studio, 960x540
+assets/freebie-mockup.jpg         78 KB — Fallback fuer alte Browser
 assets/fonts/playfair-display-latin.woff2   30 KB, subsetted, self-hosted
 worker/worker.js                  Cloudflare Worker -> Flodesk
 worker/wrangler.toml
 worker/README.md                  Deploy-Anleitung fuer den Worker
-tools/optimize-mockup.sh          Bild komprimieren
-tools/make-placeholder-mockup.py  erzeugt den Platzhalter neu
+tools/optimize-mockup.sh          Thumbnail neu komprimieren
+tools/make-placeholder-mockup.py  erzeugt einen Platzhalter, falls mal keins da ist
 ```
 
 ## Was schon fertig ist
@@ -32,12 +32,15 @@ tools/make-placeholder-mockup.py  erzeugt den Platzhalter neu
 
 ## Gewichte
 
-| Datei | Groesse |
+| Datei | Uebertragen |
 |---|---|
-| index.html (inkl. CSS + JS) | ~15 KB |
+| index.html (inkl. CSS + JS, gzip) | 6 KB |
 | Font (woff2, subsetted) | 30 KB |
-| Thumbnail (WebP) | 7 KB |
-| **Gesamt First Load** | **~52 KB** in 3 Requests |
+| Thumbnail (WebP, 960x540) | 56 KB |
+| **Gesamt First Load** | **91 KB** in 3 Requests |
+
+Das JPG wird nur von Browsern ohne WebP-Unterstuetzung geladen und zaehlt
+praktisch nie mit.
 
 ---
 
@@ -120,22 +123,25 @@ var CONFIG = {
 };
 ```
 
-## 5. Bild ersetzen und komprimieren
+## 5. Thumbnail — erledigt, aber gut zu wissen
 
-Das aktuelle Thumbnail ist ein Platzhalter und traegt sichtbar den Hinweis
-„PLACEHOLDER". Echtes Bild (16:9, Motiv/Text **nicht** in der Bildmitte, dort
-sitzt der Play-Button):
+Drin ist das echte Bild („FREE RESET", Eva im Studio), 960x540, WebP 56 KB.
+Falls es spaeter getauscht wird:
 
 ```bash
-./tools/optimize-mockup.sh ~/Desktop/thumbnail-original.jpg
+./tools/optimize-mockup.sh ~/Downloads/neues-thumbnail.png
 ```
 
-Ohne Tools auf dem Rechner: [squoosh.app](https://squoosh.app) → WebP, Quality
-72, Breite 960 → als `assets/freebie-mockup.webp` speichern, dazu ein JPG
-gleicher Groesse als `assets/freebie-mockup.jpg`.
+Zwei Regeln fuers Motiv:
 
-Wenn das Seitenverhaeltnis nicht 16:9 ist: `width`/`height` im `<img>` in
-`index.html` anpassen, sonst springt das Layout beim Laden.
+- **16:9**, sonst `width`/`height` im `<img>` in `index.html` mit anpassen,
+  weil sonst das Layout beim Laden springt.
+- **Unten links nichts Wichtiges** — dort sitzt der Play-Button. Er steht
+  bewusst nicht mittig, weil dort die Schrift und Evas Gesicht sind.
+
+Ohne Tools auf dem Rechner: [squoosh.app](https://squoosh.app) → WebP, Quality
+86, Breite 960 → als `assets/freebie-mockup.webp` speichern, dazu ein JPG
+gleicher Groesse als `assets/freebie-mockup.jpg`.
 
 ## 6. Meta Pixel einsetzen
 

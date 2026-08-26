@@ -19,8 +19,8 @@ SRC="${1:-}"
 OUT_DIR="$(cd "$(dirname "$0")/.." && pwd)/assets"
 BASE="$OUT_DIR/freebie-mockup"
 WIDTH=960          # 2x der groessten Anzeigebreite -> reicht fuer alle Retina-Displays
-Q_WEBP=72
-Q_JPG=76
+Q_WEBP=86
+Q_JPG=82
 
 work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
@@ -67,8 +67,8 @@ echo
 for f in "$BASE.webp" "$BASE.jpg"; do
   kb=$(( $(wc -c < "$f") / 1024 ))
   printf '%-42s %4s KB\n' "$(basename "$f")" "$kb"
-  if [ "$f" = "$BASE.webp" ] && [ "$kb" -gt 60 ]; then
-    echo "   ⚠ ueber 60 KB — Q_WEBP im Skript auf 65 senken und erneut laufen lassen."
+  if [ "$f" = "$BASE.webp" ] && [ "$kb" -gt 80 ]; then
+    echo "   ⚠ ueber 80 KB — Q_WEBP im Skript auf 78 senken und erneut laufen lassen."
   fi
 done
 
@@ -76,4 +76,4 @@ echo
 echo "Falls die Seitenverhaeltnisse nicht 16:9 sind: width/height im <img> in"
 echo "index.html anpassen, sonst springt das Layout beim Laden."
 echo "Ohne Tools auf dem Rechner geht es auch im Browser: https://squoosh.app"
-echo "  -> WebP, Quality 72, Breite 960 -> als assets/freebie-mockup.webp speichern."
+echo "  -> WebP, Quality 86, Breite 960 -> als assets/freebie-mockup.webp speichern."

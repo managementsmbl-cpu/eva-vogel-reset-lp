@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Reset Your Audition Nerves in Minutes — Free | Eva Vogel</title>
-<meta name="description" content="A simple, body-based reset for audition nerves, used by international mezzo-soprano Eva Vogel. Free video, in your inbox in 2 minutes.">
+<meta name="description" content="A simple, body-based reset for audition nerves, used by international mezzo-soprano Eva Vogel. Free 7-minute video.">
 <!-- Nur bezahlter Traffic: nicht indexieren. Zeile entfernen, wenn die Seite organisch ranken soll. -->
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#F7F4EE">
@@ -87,6 +87,8 @@ body{
 }
 
 /* ---------- Kopf ---------- */
+/* Mobile: Kopfbereich mittig. Der Desktop-Breakpoint stellt auf linksbuendig zurueck. */
+.head{text-align:center}
 h1{
   font-family:var(--serif);
   font-weight:500;
@@ -114,7 +116,7 @@ h1{
   letter-spacing:.16em;
 }
 .sub{
-  margin:0;
+  margin:0 auto;
   font-size:clamp(.9rem,3.7vw,1.05rem);
   line-height:1.45;
   color:var(--ink-soft);
@@ -142,20 +144,21 @@ h1{
   border-radius:3px;
   box-shadow:0 10px 26px -14px rgba(12,11,11,.55);
 }
+/* Bewusst nicht zentriert: in der Bildmitte stehen "FREE RESET" und Evas Gesicht.
+   Unten links liegt nur das Sofa — dort verdeckt der Button nichts. */
 .play{
   position:absolute;
-  top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:3.25rem;height:3.25rem;
+  left:5%;bottom:9%;
+  width:2.6rem;height:2.6rem;
   border-radius:50%;
   background:rgba(247,244,238,.94);
   display:grid;place-items:center;
-  box-shadow:0 4px 14px rgba(0,0,0,.3);
+  box-shadow:0 3px 12px rgba(0,0,0,.4);
   transition:transform .18s ease;
   pointer-events:none;
 }
-.play svg{width:1.05rem;height:1.05rem;margin-left:.15rem;fill:var(--bordeaux)}
-.thumb:hover .play,.thumb:focus-visible .play{transform:translate(-50%,-50%) scale(1.07)}
+.play svg{width:.85rem;height:.85rem;margin-left:.12rem;fill:var(--bordeaux)}
+.thumb:hover .play,.thumb:focus-visible .play{transform:scale(1.08)}
 .thumb-cap{
   display:block;
   margin-top:.45rem;
@@ -280,7 +283,8 @@ a{color:inherit;text-decoration:underline;text-underline-offset:2px}
   .bullets{grid-area:bul;align-self:start}
   footer{grid-area:foot;align-self:end}
   .thumb{max-width:100%;margin:0 0 1.4rem;text-align:left}
-  .sub{max-width:38ch}
+  .head{text-align:left}
+  .sub{max-width:38ch;margin-left:0}
 }
 
 @media (prefers-reduced-motion:reduce){
@@ -295,7 +299,7 @@ a{color:inherit;text-decoration:underline;text-underline-offset:2px}
   <div class="head">
     <h1>When your body goes into survival mode, your voice follows.</h1>
     <p class="answer">Reset your audition nerves in minutes — <span class="free">Free</span></p>
-    <p class="sub">The simple, body-based reset I use before stepping on the world's biggest stages — free, in your inbox in 2 minutes.</p>
+    <p class="sub">The simple, body-based reset I use before stepping on the world's biggest stages.</p>
   </div>
 
   <div class="aside">
@@ -304,10 +308,10 @@ a{color:inherit;text-decoration:underline;text-underline-offset:2px}
       <picture>
         <source srcset="assets/freebie-mockup.webp" type="image/webp">
         <img src="assets/freebie-mockup.jpg" width="960" height="540" fetchpriority="high" decoding="async"
-             alt="Audition Nerves Reset — free 4-minute video by Eva Vogel">
+             alt="Audition Nerves Reset — free 7-minute video by Eva Vogel">
       </picture>
       <span class="play" aria-hidden="true"><svg viewBox="0 0 12 14"><path d="M0 0l12 7-12 7z"/></svg></span>
-      <span class="thumb-cap">Free 4-minute video</span>
+      <span class="thumb-cap">Free 7-minute video</span>
     </button>
 
     <form class="card" id="optin" novalidate>
@@ -335,7 +339,7 @@ a{color:inherit;text-decoration:underline;text-underline-offset:2px}
   </div>
 
   <ul class="bullets">
-    <li><b>01</b><span>Calm your body and steady your breath in under 5 minutes</span></li>
+    <li><b>01</b><span>Calm your body and steady your breath in 5 minutes</span></li>
     <li><b>02</b><span>The exact reset I use before Carnegie Hall and La Scala</span></li>
     <li><b>03</b><span>Works right before you walk into the audition room</span></li>
   </ul>
