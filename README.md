@@ -52,7 +52,7 @@ Der Ordner ist ein kompletter Repo-Root. Wichtig: GitHub Pages erlaubt **eine
 CNAME-Datei pro Repo**, deshalb muss das ein eigenes Repo werden, nicht ein
 Unterordner der SMBL-Seite.
 
-Repo auf github.com/new anlegen (Name `eva-vogel-reset`, **public** — GitHub
+Repo auf github.com/new anlegen (Name `eva-vogel-reset-lp`, **public** — GitHub
 Pages braucht auf dem Gratis-Plan ein oeffentliches Repo, **kein** README/
 .gitignore/Lizenz ankreuzen), dann:
 
@@ -61,7 +61,7 @@ git init -b main && git add -A && git commit -m "Reset landing page"
 ```
 
 ```bash
-git remote add origin git@github.com:managementsmbl-cpu/eva-vogel-reset.git && git push -u origin main
+git remote add origin git@github.com:managementsmbl-cpu/eva-vogel-reset-lp.git && git push -u origin main
 ```
 
 ## 2. GitHub Pages aktivieren
@@ -69,7 +69,7 @@ git remote add origin git@github.com:managementsmbl-cpu/eva-vogel-reset.git && g
 1. Repo → **Settings → Pages**
 2. Source: **Deploy from a branch**, Branch: `main`, Ordner: `/ (root)` → Save
 3. Nach 1–2 Minuten laeuft die Seite unter
-   `https://managementsmbl-cpu.github.io/eva-vogel-reset/`
+   `https://managementsmbl-cpu.github.io/eva-vogel-reset-lp/`
 
 Die eigene Domain kommt bewusst erst in Schritt 3 dazu — siehe
 [deploy/README.md](deploy/README.md).
