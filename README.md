@@ -159,11 +159,15 @@ UTM-Parameter optional (die Seite ignoriert sie, Flodesk sieht sie nicht).
 Die Seite verlinkt auf drei Adressen auf evavogel.com. **Slugs pruefen und ggf.
 in `index.html` korrigieren**:
 
-- `https://evavogel.com/datenschutz` (Consent-Zeile: „Privacy Policy" + Footer)
-- `https://evavogel.com/impressum` (Footer)
+- `https://evavogel.com/legal` — Datenschutzerklaerung (Consent-Zeile
+  „Privacy Policy" + Footer-Link „Datenschutz"). Geprueft: erreichbar, nennt
+  den „Audition Nerves Reset" und Flodesk bereits namentlich.
+- `https://evavogel.com/impressum` — geprueft, erreichbar
+- `https://evavogel.com/your-reset` — Redirect-Ziel nach dem Optin,
+  geprueft, erreichbar
 
-In der Datenschutzerklaerung muss der Meta-Pixel erwaehnt sein, sobald er live
-ist. Die Landingpage selbst setzt keine Cookies.
+Offen: In der Datenschutzerklaerung muss der Meta-Pixel ergaenzt werden,
+sobald er live ist. Die Landingpage selbst setzt keine Cookies.
 
 ## 8. Livetest
 
