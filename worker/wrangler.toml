@@ -5,11 +5,13 @@ compatibility_date = "2026-01-01"
 [vars]
 # ID des Flodesk-Segments "Audition Nerves Reset".
 # Flodesk -> Audience -> Segments -> Segment oeffnen -> ID steht in der URL.
-FLODESK_SEGMENT_ID = "HIER_SEGMENT_ID_EINTRAGEN"
+# Segment: "Audition Nerves Reset"
+FLODESK_SEGMENT_ID = "69d16ace4a086815315a4708"
 
-# Komma-Liste der Origins, die posten duerfen. Leer lassen = alle erlaubt
-# (nur fuer den ersten Test; danach unbedingt eintragen).
-ALLOWED_ORIGINS = "https://reset.evavogel.com"
+# Komma-Liste der Origins, die posten duerfen. Leer lassen = alle erlaubt.
+# Die github.io-Adresse ist die Vorschau-URL, solange die eigene Domain fehlt —
+# raus damit, sobald reset.evavogel.com live ist.
+ALLOWED_ORIGINS = "https://reset.evavogel.com,https://managementsmbl-cpu.github.io"
 
 # FLODESK_API_KEY wird NICHT hier eingetragen, sondern als Secret gesetzt:
 #   npx wrangler secret put FLODESK_API_KEY

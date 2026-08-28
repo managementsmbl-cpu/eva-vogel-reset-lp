@@ -36,8 +36,8 @@ cd worker && npx wrangler secret put FLODESK_API_KEY
 cd worker && npx wrangler deploy
 ```
 
-Am Ende gibt Wrangler die URL aus, z. B.
-`https://eva-reset-optin.<dein-subdomain>.workers.dev`
+Am Ende gibt Wrangler die URL aus. Aktuell deployed:
+`https://eva-reset-optin.smblmedia.workers.dev`
 
 ## 4. Landingpage scharfschalten
 
@@ -45,7 +45,7 @@ In `index.html` ganz unten im `CONFIG`-Block die URL eintragen:
 
 ```js
 var CONFIG = {
-  workerUrl:   "https://eva-reset-optin.<dein-subdomain>.workers.dev",
+  workerUrl:   "https://eva-reset-optin.smblmedia.workers.dev",
   redirectUrl: "https://evavogel.com/your-reset",
   timeoutMs:   12000
 };
@@ -57,7 +57,7 @@ in der Browser-Konsole geloggt, es wird nichts gesendet und nicht weitergeleitet
 ## 5. Testen
 
 ```bash
-curl -i -X POST https://eva-reset-optin.<subdomain>.workers.dev \
+curl -i -X POST https://eva-reset-optin.smblmedia.workers.dev \
   -H "Content-Type: application/json" \
   -H "Origin: https://reset.evavogel.com" \
   -d '{"first_name":"Test","email":"dein+test@gmail.com"}'
