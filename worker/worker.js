@@ -90,9 +90,20 @@ export default {
         return json({ error: "Signup failed", status: create.status }, 502, cors);
       }
 
+      // Flodesk adressiert Subscriber in der Segment-Route ueber die ID, nicht
+      // ueber die E-Mail — mit der E-Mail im Pfad antwortet die API mit 404.
+      // Die ID steht in der Antwort von Schritt 1.
+      const created = await create.json().catch(() => ({}));
+      const subscriberId = created.id;
+
+      if (!subscriberId) {
+        console.log("flodesk/subscribers ohne id", JSON.stringify(created).slice(0, 300));
+        return json({ ok: true, warning: "no_subscriber_id" }, 200, cors);
+      }
+
       // ---- 2) Segment "Audition Nerves Reset" zuweisen ----------------------
       const segment = await fetch(
-        `${FLODESK_API}/subscribers/${encodeURIComponent(email)}/segments`,
+        `${FLODESK_API}/subscribers/${encodeURIComponent(subscriberId)}/segments`,
         {
           method: "POST",
           headers,
@@ -103,8 +114,10 @@ export default {
       if (!segment.ok) {
         const detail = await safeText(segment);
         console.log("flodesk/segments", segment.status, detail);
-        // Subscriber existiert bereits — nur die Segment-Zuweisung hakt.
-        // Kein harter Fehler fuer den Nutzer, aber im Log sichtbar.
+        // Der Subscriber ist angelegt, nur die Segment-Zuweisung hakt. Bewusst
+        // kein harter Fehler: Der Besucher wird trotzdem auf die Video-Seite
+        // weitergeleitet. Sichtbar wird es in `wrangler tail` und daran, dass
+        // die Freebie-Automation nicht ausloest.
         return json({ ok: true, warning: "segment_assign_failed" }, 200, cors);
       }
 

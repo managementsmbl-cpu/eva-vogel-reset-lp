@@ -81,6 +81,11 @@ cd worker && npx wrangler tail
 | `403 Forbidden origin` | Origin steht nicht in `ALLOWED_ORIGINS` |
 | `500 Server not configured` | API-Key-Secret oder Segment-ID fehlt |
 | `502 Signup failed` | Flodesk hat abgelehnt — Status und Antwort stehen in `wrangler tail` |
+| `200 {"ok":true,"warning":"segment_assign_failed"}` | Kontakt angelegt, aber nicht im Segment. Der Besucher merkt nichts, die Freebie-Automation loest aber nicht aus. Ursache in `wrangler tail` nachsehen. |
+
+**Flodesk-Eigenheit:** Die Segment-Route adressiert Subscriber ueber die
+**Subscriber-ID**, nicht ueber die E-Mail. Mit der E-Mail im Pfad antwortet die
+API mit 404. Der Worker liest die ID deshalb aus der Antwort von Schritt 1.
 
 ## Optional später
 
