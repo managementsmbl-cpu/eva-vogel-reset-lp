@@ -3,10 +3,13 @@ main = "worker.js"
 compatibility_date = "2026-01-01"
 
 [vars]
-# ID des Flodesk-Segments "Audition Nerves Reset".
-# Flodesk -> Audience -> Segments -> Segment oeffnen -> ID steht in der URL.
-# Segment: "Audition Nerves Reset"
-FLODESK_SEGMENT_ID = "69d16ace4a086815315a4708"
+# Segmente, in die jeder Anmelder kommt — Komma-Liste, ohne Leerzeichen.
+# Jedes Segment loest den zugehoerigen Flodesk-Workflow aus, deshalb muessen
+# hier dieselben stehen wie beim bestehenden Anmeldeweg auf evavogel.com.
+#   69d16ace4a086815315a4708  Audition Nerves Reset   -> Freebie-Strecke
+#   69de589129f5238e07401f8d  Main Nurture            -> Nurture-Strecke
+# IDs findest du unter Flodesk -> Audience -> Segments, sie stehen in der URL.
+FLODESK_SEGMENT_IDS = "69d16ace4a086815315a4708,69de589129f5238e07401f8d"
 
 # Komma-Liste der Origins, die posten duerfen. Leer lassen = alle erlaubt.
 # Die github.io-Adresse ist die Vorschau-URL, solange die eigene Domain fehlt —

@@ -8,7 +8,8 @@
  *
  * Secrets / Variablen (siehe README.md):
  *   FLODESK_API_KEY   (Secret)  — Flodesk API Key
- *   FLODESK_SEGMENT_ID (Var)    — ID des Segments "Audition Nerves Reset"
+ *   FLODESK_SEGMENT_IDS (Var)   — Komma-Liste der Segmente, in die der
+ *                                 Kontakt soll (Reihenfolge egal)
  *   ALLOWED_ORIGINS   (Var)     — Komma-Liste erlaubter Origins
  */
 
@@ -59,7 +60,12 @@ export default {
       return json({ error: "Please check your email address." }, 400, cors);
     }
 
-    if (!env.FLODESK_API_KEY || !env.FLODESK_SEGMENT_ID) {
+    const segmentIds = (env.FLODESK_SEGMENT_IDS || env.FLODESK_SEGMENT_ID || "")
+      .split(",")
+      .map((id) => id.trim())
+      .filter(Boolean);
+
+    if (!env.FLODESK_API_KEY || segmentIds.length === 0) {
       return json({ error: "Server not configured" }, 500, cors);
     }
 
@@ -101,13 +107,16 @@ export default {
         return json({ ok: true, warning: "no_subscriber_id" }, 200, cors);
       }
 
-      // ---- 2) Segment "Audition Nerves Reset" zuweisen ----------------------
+      // ---- 2) Segmente zuweisen --------------------------------------------
+      // Wichtig: alle Segmente in EINEM Aufruf. Jedes Segment ist der Ausloeser
+      // fuer den zugehoerigen Flodesk-Workflow — fehlt eines, laeuft die
+      // entsprechende Mailstrecke nicht an.
       const segment = await fetch(
         `${FLODESK_API}/subscribers/${encodeURIComponent(subscriberId)}/segments`,
         {
           method: "POST",
           headers,
-          body: JSON.stringify({ segment_ids: [env.FLODESK_SEGMENT_ID] }),
+          body: JSON.stringify({ segment_ids: segmentIds }),
         }
       );
 

@@ -8,16 +8,32 @@ schickt nur `{first_name, email}` dorthin.
 - Cloudflare-Account (kostenlos reicht: 100.000 Requests/Tag)
 - Node.js auf dem Rechner
 - Flodesk-API-Key: Flodesk → **Integrations → API** → Key erzeugen
-- Segment-ID: Flodesk → **Audience → Segments** → Segment „Audition Nerves Reset"
-  öffnen → die ID steht in der Adresszeile (`.../segments/**64f...**`)
+- Segment-IDs: Flodesk → **Audience → Segments** → Segment öffnen → die ID
+  steht in der Adresszeile (`.../segments/**64f...**`)
 
-## 2. Segment-ID und Origin eintragen
+## 2. Segment-IDs und Origin eintragen
 
 In `wrangler.toml`:
 
 ```toml
-FLODESK_SEGMENT_ID = "deine-segment-id"
-ALLOWED_ORIGINS    = "https://reset.evavogel.com"
+FLODESK_SEGMENT_IDS = "id-eins,id-zwei"
+ALLOWED_ORIGINS     = "https://reset.evavogel.com"
+```
+
+**Wichtig:** Hier muessen dieselben Segmente stehen wie beim bestehenden
+Anmeldeweg auf evavogel.com. Jedes Segment ist der Ausloeser fuer den
+zugehoerigen Workflow — fehlt eines, laeuft die entsprechende Mailstrecke nicht
+an, und der Anmelder bekommt nichts. Aktuell eingetragen:
+
+| Segment | ID | Workflow |
+|---|---|---|
+| Audition Nerves Reset | `69d16ace4a086815315a4708` | Freebie-Strecke |
+| Main Nurture | `69de589129f5238e07401f8d` | Nurture-Strecke |
+
+Gegenprobe, welche Segmente ein bestehender Anmelder hat:
+
+```bash
+curl -s -u "$FLODESK_KEY:" -H "User-Agent: check" "https://api.flodesk.com/v1/subscribers?per_page=100" | python3 -m json.tool
 ```
 
 ## 3. Deployen
