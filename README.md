@@ -10,7 +10,9 @@ robots.txt
 assets/freebie-mockup.webp        56 KB — Eva im Studio, 960x540
 assets/freebie-mockup.jpg         78 KB — Fallback fuer alte Browser
 assets/fonts/playfair-display-latin.woff2   30 KB, subsetted, self-hosted
-worker/worker.js                  Cloudflare Worker -> Flodesk
+worker/worker.js                  Cloudflare Worker -> Flodesk (3 Schritte:
+                                  Subscriber anlegen, Segmente zuweisen,
+                                  in den Workflow einschreiben)
 worker/wrangler.toml
 worker/README.md                  Deploy-Anleitung fuer den Worker
 tools/optimize-mockup.sh          Thumbnail neu komprimieren

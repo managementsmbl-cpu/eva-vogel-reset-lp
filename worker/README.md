@@ -99,9 +99,34 @@ cd worker && npx wrangler tail
 | `502 Signup failed` | Flodesk hat abgelehnt — Status und Antwort stehen in `wrangler tail` |
 | `200 {"ok":true,"warning":"segment_assign_failed"}` | Kontakt angelegt, aber nicht im Segment. Der Besucher merkt nichts, die Freebie-Automation loest aber nicht aus. Ursache in `wrangler tail` nachsehen. |
 
-**Flodesk-Eigenheit:** Die Segment-Route adressiert Subscriber ueber die
-**Subscriber-ID**, nicht ueber die E-Mail. Mit der E-Mail im Pfad antwortet die
-API mit 404. Der Worker liest die ID deshalb aus der Antwort von Schritt 1.
+## Zwei Flodesk-Eigenheiten, die viel Zeit kosten koennen
+
+**1. Die Segment-Route braucht die Subscriber-ID, nicht die E-Mail.**
+Mit der E-Mail im Pfad antwortet die API mit 404. Der Worker liest die ID
+deshalb aus der Antwort des Create-Calls.
+
+**2. Ein Segment startet keinen Workflow.**
+Das ist die wichtigere Falle. Ein Kontakt kann im Segment "Audition Nerves
+Reset" liegen und trotzdem nie eine Mail bekommen — die Zugehoerigkeit zum
+Segment schreibt ihn nicht in den Workflow ein. Das muss ein eigener Aufruf
+machen:
+
+```
+POST /v1/workflows/{workflow_id}/subscribers
+Body: {"id": "<subscriber_id>"}      -> 204 No Content
+```
+
+Meldet die API `400 active_subscriber_in_workflow`, steckt der Kontakt bereits
+drin (z. B. bei einer Zweitanmeldung). Der Worker wertet das als Erfolg.
+
+Workflow-IDs holst du dir mit:
+
+```bash
+curl -s -u "$FLODESK_KEY:" -H "User-Agent: check" https://api.flodesk.com/v1/workflows
+```
+
+Ein Detail-Endpunkt fuer einzelne Workflows existiert nicht — welcher Trigger
+hinterlegt ist, siehst du nur in der Flodesk-Oberflaeche.
 
 ## Optional später
 

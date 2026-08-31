@@ -10,6 +10,8 @@
  *   FLODESK_API_KEY   (Secret)  — Flodesk API Key
  *   FLODESK_SEGMENT_IDS (Var)   — Komma-Liste der Segmente, in die der
  *                                 Kontakt soll (Reihenfolge egal)
+ *   FLODESK_WORKFLOW_IDS (Var)  — Komma-Liste der Workflows, in die der
+ *                                 Kontakt eingeschrieben wird
  *   ALLOWED_ORIGINS   (Var)     — Komma-Liste erlaubter Origins
  */
 
@@ -61,6 +63,11 @@ export default {
     }
 
     const segmentIds = (env.FLODESK_SEGMENT_IDS || env.FLODESK_SEGMENT_ID || "")
+      .split(",")
+      .map((id) => id.trim())
+      .filter(Boolean);
+
+    const workflowIds = (env.FLODESK_WORKFLOW_IDS || "")
       .split(",")
       .map((id) => id.trim())
       .filter(Boolean);
@@ -128,6 +135,33 @@ export default {
         // weitergeleitet. Sichtbar wird es in `wrangler tail` und daran, dass
         // die Freebie-Automation nicht ausloest.
         return json({ ok: true, warning: "segment_assign_failed" }, 200, cors);
+      }
+
+      // ---- 3) In die Workflows einschreiben --------------------------------
+      // Der entscheidende Schritt: Die Segment-Zuweisung allein startet KEINEN
+      // Workflow. Ohne diesen Aufruf landet der Kontakt zwar in der Liste,
+      // bekommt aber nie eine Mail.
+      const failedWorkflows = [];
+
+      for (const workflowId of workflowIds) {
+        const enroll = await fetch(
+          `${FLODESK_API}/workflows/${encodeURIComponent(workflowId)}/subscribers`,
+          { method: "POST", headers, body: JSON.stringify({ id: subscriberId }) }
+        );
+
+        if (enroll.ok) continue;
+
+        const detail = await safeText(enroll);
+
+        // Wiederanmeldung: steckt schon drin, laeuft also bereits. Kein Fehler.
+        if (detail.includes("active_subscriber_in_workflow")) continue;
+
+        console.log("flodesk/workflows", workflowId, enroll.status, detail);
+        failedWorkflows.push(workflowId);
+      }
+
+      if (failedWorkflows.length) {
+        return json({ ok: true, warning: "workflow_enroll_failed" }, 200, cors);
       }
 
       return json({ ok: true }, 200, cors);

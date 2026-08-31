@@ -11,6 +11,17 @@ compatibility_date = "2026-01-01"
 # IDs findest du unter Flodesk -> Audience -> Segments, sie stehen in der URL.
 FLODESK_SEGMENT_IDS = "69d16ace4a086815315a4708,69de589129f5238e07401f8d"
 
+# Workflows, in die der Kontakt eingeschrieben wird — Komma-Liste.
+# ACHTUNG: Die Segment-Zuweisung oben startet KEINEN Workflow. Ohne einen
+# Eintrag hier landet der Kontakt in der Liste, bekommt aber nie eine Mail.
+#   69d170d62b1eab093cf9aac4  Audition Nerves Reset Subscriber -> Freebie-Mail
+#   69de590c5b69d461c7dd2af0  Main Nurture                     -> Nurture-Strecke
+#   69de5960fafd8e7f711742a9  Newsletter Subscriber
+# Bewusst nur die Freebie-Strecke: Wann die Nurture-Strecke starten soll, ist
+# eine inhaltliche Entscheidung von Eva. Soll sie sofort mitlaufen, die zweite
+# ID hier ergaenzen.
+FLODESK_WORKFLOW_IDS = "69d170d62b1eab093cf9aac4"
+
 # Komma-Liste der Origins, die posten duerfen. Leer lassen = alle erlaubt.
 # Die github.io-Adresse ist die Vorschau-URL, solange die eigene Domain fehlt —
 # raus damit, sobald reset.evavogel.com live ist.
