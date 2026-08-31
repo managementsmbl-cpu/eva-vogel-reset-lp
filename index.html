@@ -23,25 +23,34 @@
 <link rel="preload" href="assets/fonts/playfair-display-latin.woff2" as="font" type="font/woff2" crossorigin>
 
 <!-- ============================================================
-     META PIXEL — BASIS-CODE HIER EINSETZEN
-     Facebook Events Manager -> Datenquellen -> Pixel -> Code einrichten.
-     Den kompletten <script>-Block von Meta unten anstelle dieses
-     Kommentars einfuegen und PIXEL_ID ersetzen.
+     META PIXEL — Pixel-ID 27045961755077839
+     Derselbe Pixel wie auf evavogel.com/your-reset. Bewusst kein zweiter:
+     Meta lernt pro Pixel, zwei halbieren die Datenbasis und verhindern
+     Zielgruppen wie "Landingpage gesehen, aber nicht eingetragen".
 
-     <script>
-     !function(f,b,e,v,n,t,s){...Standard-Snippet von Meta...}(window,document,'script',
-     'https://connect.facebook.net/en_US/fbevents.js');
-     fbq('init','PIXEL_ID'); fbq('track','PageView');
-     <\/script>
-     <noscript><img height="1" width="1" style="display:none"
-       src="https://www.facebook.com/tr?id=PIXEL_ID&ev=PageView&noscript=1"></noscript>
+     Nur PageView. Das Lead-Event feuert auf /your-reset — wuerde es hier
+     zusaetzlich feuern, zaehlte Meta jede Anmeldung doppelt und die Kosten
+     pro Lead saehen halb so hoch aus, wie sie sind.
 
-     Hinweis Consent: Die Seite selbst setzt keine Cookies, deshalb laeuft sie
-     ohne Banner. Sobald der Pixel aktiv ist, setzt Meta Cookies. Fuer EU-Traffic
-     waere hier ein Consent-Gate nachzuruesten (Pixel erst nach Opt-in laden).
-     Aktuelles Targeting: USA/CA/UK/AU -> Hinweis in der Datenschutzerklaerung
-     reicht. Ziel-Laender-Erweiterung nach EU => Banner nachruesten.
+     Consent: Die Seite selbst setzt keine Cookies, Meta schon. Targeting ist
+     USA/CA/UK/AU, dort reicht der Hinweis in der Datenschutzerklaerung. Wird
+     auf EU erweitert, muss hier ein Consent-Gate davor (Pixel erst nach
+     Opt-in laden) und der Pixel in evavogel.com/legal ergaenzt werden.
      ============================================================ -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','27045961755077839');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt=""
+src="https://www.facebook.com/tr?id=27045961755077839&ev=PageView&noscript=1"></noscript>
 
 <style>
 /* ---------- Font: ein einziges File, subsetted, self-hosted ---------- */
@@ -457,7 +466,8 @@ a{color:inherit;text-decoration:underline;text-underline-offset:2px}
       });
     })
     .then(function(){
-      if (window.fbq) window.fbq("track","Lead");   // greift, sobald der Pixel im <head> steht
+      // Kein fbq("track","Lead") hier: Das Lead-Event feuert auf /your-reset,
+      // sonst zaehlt Meta jede Anmeldung doppelt.
       window.location.href = CONFIG.redirectUrl;
     })
     .catch(function(err){

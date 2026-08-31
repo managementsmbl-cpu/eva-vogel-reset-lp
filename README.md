@@ -1,7 +1,8 @@
 # reset.evavogel.com — Audition Nerves Reset Landingpage
 
 Eine einzelne statische Seite mit genau einem Ziel: E-Mail-Eintragung.
-Kein Framework, kein Build, keine externen Requests im kritischen Pfad.
+Kein Framework, kein Build. Einzige Fremddomain ist der Meta Pixel, der
+asynchron nachlaedt und den Seitenaufbau nicht blockiert.
 
 ```
 index.html                        alles drin: Markup, Critical CSS, JS (~15 KB)
@@ -39,7 +40,11 @@ tools/make-placeholder-mockup.py  erzeugt einen Platzhalter, falls mal keins da 
 | index.html (inkl. CSS + JS, gzip) | 6 KB |
 | Font (woff2, subsetted) | 30 KB |
 | Thumbnail (WebP, 960x540) | 56 KB |
-| **Gesamt First Load** | **91 KB** in 3 Requests |
+| **Gesamt First Load** | **91 KB** in 3 eigenen Requests |
+
+Dazu kommt der Meta Pixel von `connect.facebook.net` (~80 KB). Er laedt
+asynchron und blockiert den Seitenaufbau nicht, taucht in Lighthouse aber als
+Fremdressource auf.
 
 Das JPG wird nur von Browsern ohne WebP-Unterstuetzung geladen und zaehlt
 praktisch nie mit.
@@ -145,13 +150,22 @@ Ohne Tools auf dem Rechner: [squoosh.app](https://squoosh.app) → WebP, Quality
 86, Breite 960 → als `assets/freebie-mockup.webp` speichern, dazu ein JPG
 gleicher Groesse als `assets/freebie-mockup.jpg`.
 
-## 6. Meta Pixel einsetzen
+## 6. Meta Pixel — erledigt
 
-Im `<head>` von `index.html` steht ein klar markierter Kommentarblock.
-Das komplette Snippet aus dem Facebook Events Manager dort einfuegen und
-`PIXEL_ID` ersetzen. Das Lead-Event feuert automatisch: Das JS ruft vor dem
-Redirect `fbq('track','Lead')` auf, sobald der Pixel geladen ist — nichts
-zusaetzlich zu konfigurieren.
+Pixel `27045961755077839` liegt im `<head>`, **nur PageView**. Es ist derselbe
+Pixel wie auf `evavogel.com/your-reset`, bewusst kein zweiter: Meta lernt pro
+Pixel, zwei halbieren die Datenbasis und machen Zielgruppen wie
+"Landingpage gesehen, aber nicht eingetragen" unmoeglich.
+
+**Kein Lead-Event auf dieser Seite.** Das feuert auf `/your-reset`. Wuerde es
+hier zusaetzlich feuern, zaehlte Meta jede Anmeldung doppelt und die Kosten pro
+Lead saehen halb so hoch aus, wie sie sind. Wer das aendern will, aendert es
+auf einer der beiden Seiten — nie auf beiden.
+
+Geprueft im Browser: genau ein Aufruf an `facebook.com/tr` mit `ev=PageView`
+und der richtigen ID, kein Lead.
+
+Offen: Der Pixel muss noch in `evavogel.com/legal` ergaenzt werden.
 
 Zusaetzlich in der Ad: als Ziel-URL `https://reset.evavogel.com/` eintragen,
 UTM-Parameter optional (die Seite ignoriert sie, Flodesk sieht sie nicht).
