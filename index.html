@@ -13,7 +13,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Reset Your Audition Nerves in Minutes — Free">
-<meta property="og:description" content="The simple, body-based reset I use before stepping on the world's biggest stages.">
+<meta property="og:description" content="The simple, body-based reset I use before stepping onto the world's biggest stages.">
 <meta property="og:image" content="https://reset.evavogel.com/assets/freebie-mockup.jpg">
 <meta property="og:url" content="https://reset.evavogel.com/">
 
@@ -101,7 +101,10 @@ body{
 h1{
   font-family:var(--serif);
   font-weight:500;
-  font-size:clamp(1.5rem,6.1vw,2.6rem);
+  /* Untergrenze 1.6rem, damit die Headline auf sehr schmalen Geraeten
+     nicht auf vier Zeilen umbricht und den CTA-Button aus der Fold
+     schiebt. Gemessen: bis 390px Breite bleiben es drei Zeilen. */
+  font-size:clamp(1.6rem,7.2vw,2.6rem);
   line-height:1.12;
   letter-spacing:-.012em;
   margin:0 0 .5rem;
@@ -308,7 +311,7 @@ a{color:inherit;text-decoration:underline;text-underline-offset:2px}
   <div class="head">
     <h1>When your body goes into survival mode, your voice follows.</h1>
     <p class="answer">Reset your audition nerves in minutes — <span class="free">Free</span></p>
-    <p class="sub">The simple, body-based reset I use before stepping on the world's biggest stages.</p>
+    <p class="sub">The simple, body-based reset I use before stepping onto the world's biggest stages.</p>
   </div>
 
   <div class="aside">

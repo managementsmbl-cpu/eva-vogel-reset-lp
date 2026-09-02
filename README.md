@@ -24,7 +24,13 @@ tools/make-placeholder-mockup.py  erzeugt einen Platzhalter, falls mal keins da 
 
 - Ad-Congruenz: Die H1 ist wortgleich der Ad-Hook, direkt darunter die Aufloesung.
 - Alles Wesentliche bis zum CTA-Button passt auf 375 x 620 px — das ist die
-  nutzbare Hoehe im Instagram-In-App-Browser auf einem iPhone.
+  nutzbare Hoehe im Instagram-In-App-Browser auf einem iPhone. Nachgemessen
+  auf 390x640 (Button endet bei 563 px), 360x600 (556) und 320x568 (555);
+  die Headline bleibt ueberall dreizeilig.
+
+  **Wer die Headline-Groesse, die Bildgroesse oder die Textlaengen darueber
+  aendert, muss das nachmessen.** Der CTA-Button ohne Scrollen ist der
+  wichtigste Conversion-Faktor der Seite.
 - Formular mit Validierung, Ladezustand, Doppel-Submit-Sperre, Honeypot.
 - **Demo-Modus aktiv**: Solange keine Worker-URL eingetragen ist, wird der Submit
   nur in die Browser-Konsole geloggt. Die Seite ist damit komplett testbar.
